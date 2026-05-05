@@ -1,6 +1,7 @@
 let SessionLoad = 1
 let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
 let v:this_session=expand("<sfile>:p")
+doautoall SessionLoadPre
 silent only
 silent tabonly
 cd ~/.config/nvim
@@ -8,22 +9,15 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 let s:shortmess_save = &shortmess
-if &shortmess =~ 'A'
-  set shortmess=aoOA
-else
-  set shortmess=aoO
-endif
-badd +158 lua/plugins/init.lua
-badd +5 ~/notes/branching-stratergy-my-thoughts.md
-badd +1 health://
-badd +33 lua/config/lsp.lua
-badd +2 ~/notes/bzplatform-branching-stratergy.md
-badd +5 ~/notes/browser-router.md
-badd +1 lua/options.lua
+set shortmess+=aoO
+badd +1 init.lua
+badd +92 lua/plugins/init.lua
+badd +5 lua/config/plugins.lua
+badd +0 lua/plugins/mason.lua
 argglobal
 %argdel
-$argadd lua/plugins/init.lua
-edit lua/plugins/init.lua
+$argadd init.lua
+edit init.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -40,8 +34,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 85 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 86 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 78 + 78) / 157)
+exe 'vert 2resize ' . ((&columns * 78 + 78) / 157)
 argglobal
 setlocal foldmethod=manual
 setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
@@ -53,22 +47,20 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 161 - ((37 * winheight(0) + 20) / 40)
+let s:l = 8 - ((7 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 161
-normal! 0
-lcd ~/.config/nvim
+keepjumps 8
+normal! 022|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/notes/browser-router.md", ":p")) | buffer ~/notes/browser-router.md | else | edit ~/notes/browser-router.md | endif
+if bufexists(fnamemodify("lua/plugins/mason.lua", ":p")) | buffer lua/plugins/mason.lua | else | edit lua/plugins/mason.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/notes/browser-router.md
+  silent file lua/plugins/mason.lua
 endif
-balt ~/.config/nvim/lua/config/lsp.lua
 setlocal foldmethod=manual
-setlocal foldexpr=0
+setlocal foldexpr=v:lua.vim.treesitter.foldexpr()
 setlocal foldmarker={{{,}}}
 setlocal foldignore=#
 setlocal foldlevel=0
@@ -77,15 +69,16 @@ setlocal foldnestmax=20
 setlocal foldenable
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((6 * winheight(0) + 20) / 40)
+let s:l = 1 - ((0 * winheight(0) + 18) / 37)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 7
+keepjumps 1
 normal! 0
+lcd ~/.config/nvim
 wincmd w
-exe 'vert 1resize ' . ((&columns * 85 + 86) / 172)
-exe 'vert 2resize ' . ((&columns * 86 + 86) / 172)
+exe 'vert 1resize ' . ((&columns * 78 + 78) / 157)
+exe 'vert 2resize ' . ((&columns * 78 + 78) / 157)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -101,6 +94,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
