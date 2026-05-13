@@ -7,7 +7,7 @@ require("config.plugins")
 
 require("plugins.mason")
 -- require("plugins.conform")
-require("plugins.theme")
+-- require("plugins.theme")
 
 require("vim._core.ui2").enable({ enable = true })
 
@@ -20,6 +20,12 @@ vim.diagnostic.config({
 	virtual_lines = false,
 	jump = { float = true },
 })
+
+
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "typescriptreact" },
