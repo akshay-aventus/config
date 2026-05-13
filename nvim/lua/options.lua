@@ -16,7 +16,11 @@ vim.o.splitright = true
 vim.opt.scrolloff = 8
 vim.o.incsearch = true
 vim.o.ignorecase = false
-vim.o.smartcase = false
+vim.o.smartcase = true
+
+vim.opt.wrap = false
+vim.opt.colorcolumn = "80"
+
 vim.opt.cursorline = true
 vim.diagnostic.config({
 	update_in_insert = true,
@@ -34,7 +38,7 @@ vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 
 vim.opt.expandtab = false
-vim.opt.shiftwidth = 8
+vim.opt.shiftwidth = 2
 vim.opt.tabstop = 8
 vim.opt.smartindent = true
 
